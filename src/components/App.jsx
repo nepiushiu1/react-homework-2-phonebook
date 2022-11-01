@@ -17,18 +17,20 @@ class App extends React.Component {
   };
 
   addContact = (name, number) => {
-    const { contacts } = this.state;
-    for (const contact of contacts) {
-      if (contact.name === name) {
-        alert(`${name} is already in contacts.`);
-        return;
-      }
-    }
     const contact = {
       id: nanoid(),
       name,
       number,
     };
+
+    const isExistContact = this.state.contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (isExistContact) {
+      alert(`${name} is already in contacts`);
+      return;
+    }
 
     this.setState(({ contacts }) => ({
       contacts: [contact, ...contacts],
